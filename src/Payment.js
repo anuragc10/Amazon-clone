@@ -12,50 +12,50 @@ function Payment() {
     const [{basket,user},dispatch]=useStateValue();
     const history=useHistory();
     // payment card--starts here
-    const stripe = useStripe();
-    const elements= useElements();
+    // const stripe = useStripe();
+    // const elements= useElements();
 
-    const [error,setError]=useState(null);
-    const [disabled,setDisabled]=useState(true);
-    const [succeeded,setSucceeded]= useState(false);
-    const [processing,setProcessing]=useState("");
-    const [clientSecret,setClientSecret]=useState(true);
+    // const [error,setError]=useState(null);
+    // const [disabled,setDisabled]=useState(true);
+    // const [succeeded,setSucceeded]= useState(false);
+    // const [processing,setProcessing]=useState("");
+    // const [clientSecret,setClientSecret]=useState(true);
 
-    useEffect(()=>{
-        const getClientSecret= async()=>{
-            const response = await axios({
-                method: "post",
-                url:`/payment/create?total=${getBasketTotal(basket) * 100}`
-            });
-            setClientSecret(response.data.clientSecret)
-        }
-        getClientSecret();
-    },[basket])
+    // useEffect(()=>{
+    //     const getClientSecret= async()=>{
+    //         const response = await axios({
+    //             method: "post",
+    //             url:`/payment/create?total=${getBasketTotal(basket) * 100}`
+    //         });
+    //         setClientSecret(response.data.clientSecret)
+    //     }
+    //     getClientSecret();
+    // },[basket])
 
-    const handleSubmit=async(event)=>{
-        event.preventDefault();
-        setProcessing(true);
+    // const handleSubmit=async(event)=>{
+    //     event.preventDefault();
+    //     setProcessing(true);
 
-        const payload = await stripe.confirmCardPayment(clientSecret,{
-            payment_method:{
-                card: elements.getElement(CardElement)
-            }
-        }).then(({paymentIntent})=>{
-            setSucceeded(true);
-            setError(null)
-            setProcessing(false)
+    //     const payload = await stripe.confirmCardPayment(clientSecret,{
+    //         payment_method:{
+    //             card: elements.getElement(CardElement)
+    //         }
+    //     }).then(({paymentIntent})=>{
+    //         setSucceeded(true);
+    //         setError(null)
+    //         setProcessing(false)
 
-            history.replace('/orders')
+    //         history.replace('/orders')
 
-        })
-    }
+    //     })
+    // }
 
-    const handleChange=event=>{
-        //listen for changes in the card element
-        //and display any errors as the customer types their card details.
-        setDisabled(event.empty);
-        setError(event.error ? event.error.message: "")
-    }
+    // const handleChange=event=>{
+    //     //listen for changes in the card element
+    //     //and display any errors as the customer types their card details.
+    //     setDisabled(event.empty);
+    //     setError(event.error ? event.error.message: "")
+    // }
     //payment card--ends here
 
     return (
@@ -103,7 +103,7 @@ function Payment() {
                 <div className="payment__title">
                     <h3>Payment Method</h3>
                 </div>
-                <div className="payment__details">
+                {/* <div className="payment__details">
                     <form onSubmit={handleSubmit}>
                         <CardElement onChange={handleChange}/>
                     
@@ -124,9 +124,9 @@ function Payment() {
                         </button>
                     </div>
                     {/* errors */}
-                    {error && <div>{error}</div>}
+                    {/* {error && <div>{error}</div>}
                     </form>
-                </div>
+                </div> */}
             
             </div>
         </div>
